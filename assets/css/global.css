@@ -16,12 +16,15 @@ body {
     font-family: sans-serif;
 }
 
+body { background-color: black; }
+
 h1 {
     font-size: 78px;
     font-weight: normal;
     letter-spacing: -2px;
     margin-bottom: 12px;
     line-height: 1.2;
+    color: white;
 }
 
 h2 {
@@ -29,6 +32,7 @@ h2 {
     letter-spacing: 6px;
     margin-bottom: 48px;
     line-height: 1.2;
+    color: white;
 }
 
 h3 {
@@ -37,10 +41,13 @@ h3 {
     margin-bottom: 20px;
     line-height: 1.2;
     text-transform: uppercase;
+    color: yellowgreen;
 }
 
 p {
     font-size: 20px;
     margin-bottom: 16px;
+    color: yellow;
 }
 
+a { color: yellow; }
