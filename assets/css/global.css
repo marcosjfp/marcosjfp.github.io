@@ -283,9 +283,11 @@ h2 {
 
 h3 {
     font-size: 24px;
+    font-family: 'Playfair Display', serif;
     margin-top: 240px;
     margin-bottom: 30px;
     line-height: 1.2;
+    text-shadow: 1px 1px #fff;
     text-transform: uppercase;
     color: yellowgreen;
 }
@@ -448,7 +450,6 @@ header {
       opacity: 1;
     }
   }
-
 
 
 /* ======== END CSS FOR HERO BLOCK ======== */
