@@ -126,6 +126,7 @@
         <ul class="">
             <li><a href="../../../index.html">Home</a></li>
             <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+            <li><a href="../../../portfolio/js/index.html">JavaScript</a></li>
             <li><a href="../../../contact/index.html" id="btn-cta-footer"><span>Contact</span><i class="fas fa-arrow-right"></i></a></li>
         </ul>
         <div class="item-icon">
@@ -159,48 +160,16 @@
 
         </section>
 
-        <section class="container-flex text-center" id="quotes-box-section">
+        <section class="container-flex text-center" id="quotes-box">
 
         </section><!-- end of section updated by JavaScript-->
 
-        <button id="btn-quotes">Show Random Quotes</button>
-        <div id="quotes-box"></div>
+        
+        
 
     </main>
 
-    <script>
-
-        document.getElementById("btn-quotes").addEventListener("click", fetchRandomNumQuotes);
-
-        async function fetchRandomNumQuotes() {
-            try {
-                const response = await fetch('https://api.quotable.io/quotes/random?limit=15');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                let html_block = "";
-
-                data.forEach(quote => {
-                    const author = quote.author || "Anonymous";
-                    html_block += `
-                        <div class="quote-card">
-                            <p>"${quote.content}"</p>
-                            <h3>- ${author}</h3>
-                        </div>
-                    `;
-                });
-
-                document.getElementById("quotes-box").innerHTML = html_block;
-            } catch (error) {
-                console.error('Error fetching quotes:', error);
-                document.getElementById("quotes-box").innerHTML = "<p>Error loading quotes. Please try again.</p>";
-            }
-        }
-
-    </script>
+    
 
 
     <!-- footer -->
@@ -213,6 +182,7 @@
 		<ul class="footer-links">
 			<li><a href="../../../index.html">Home</a></li>
         <li><a href="../../../portfolio/index.html">Portfolio</a></li>
+        <li><a href="../../../portfolio/js/index.html">JavaScript</a></li>
         <li><a href="../../../contact/index.html" id="btn-cta"><span>Contact</span><i class="fas fa-arrow-right"></i></a></li>
 		</ul>
 
@@ -226,6 +196,46 @@
     </footer>
 
     <script src="../assets/js/menu.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("btn-quotes");
+
+        if (btn) {
+            btn.addEventListener("click", fetchRandomNumQuotes);
+        } else {
+            console.error("Button with ID 'btn-quotes' not found!");
+        }
+    });
+
+    async function fetchRandomNumQuotes() {
+        console.log("Yes, it works!");
+        try {
+            const response = await fetch('https://api.quotable.io/random?count=15'); // Correct API URL
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            let html_block = "";
+
+            data.forEach(quote => {
+                const author = quote.author || "Anonymous";
+                html_block += `
+                    <div class="quote-card">
+                        <p>"${quote.content}"</p>
+                        <h3>- ${author}</h3>
+                    </div>
+                `;
+            });
+
+            document.getElementById("quotes-box").innerHTML = html_block;
+        } catch (error) {
+            console.error('Error fetching quotes:', error);
+            document.getElementById("quotes-box").innerHTML = "<p>Error loading quotes. Please try again.</p>";
+        }
+    }
+</script>
 
 
 </body>
