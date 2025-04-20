@@ -198,43 +198,74 @@
     <script src="../assets/js/menu.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const btn = document.getElementById("btn-quotes");
+    // Get the correct button ID
+    const btn = document.getElementById("btn-quotes-link");
 
-        if (btn) {
-            btn.addEventListener("click", fetchRandomNumQuotes);
-        } else {
-            console.error("Button with ID 'btn-quotes' not found!");
-        }
-    });
-
-    async function fetchRandomNumQuotes() {
-        console.log("Yes, it works!");
-        try {
-            const response = await fetch('https://api.quotable.io/random?count=15'); // Correct API URL
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            let html_block = "";
-
-            data.forEach(quote => {
-                const author = quote.author || "Anonymous";
-                html_block += `
-                    <div class="quote-card">
-                        <p>"${quote.content}"</p>
-                        <h3>- ${author}</h3>
-                    </div>
-                `;
-            });
-
-            document.getElementById("quotes-box").innerHTML = html_block;
-        } catch (error) {
-            console.error('Error fetching quotes:', error);
-            document.getElementById("quotes-box").innerHTML = "<p>Error loading quotes. Please try again.</p>";
-        }
+    if (btn) {
+        btn.addEventListener("click", fetchRandomQuotes);
+    } else {
+        console.error("Button with ID 'btn-quotes-link' not found!");
     }
+});
+
+async function fetchRandomQuotes() {
+    console.log("Fetching quotes...");
+    
+    // Clear previous quotes and show loading message
+    document.getElementById("quotes-box").innerHTML = "<p>Loading quotes...</p>";
+    
+    try {
+        // Using a hardcoded array of quotes as fallback
+        const fallbackQuotes = [
+            { quote: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
+            { quote: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+            { quote: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
+            { quote: "If life were predictable it would cease to be life, and be without flavor.", author: "Eleanor Roosevelt" },
+            { quote: "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.", author: "Oprah Winfrey" },
+            { quote: "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.", author: "James Cameron" },
+            { quote: "Life is what we make it, always has been, always will be.", author: "Grandma Moses" },
+            { quote: "The question isn't who is going to let me; it's who is going to stop me.", author: "Ayn Rand" },
+            { quote: "Spread love everywhere you go. Let no one ever come to you without leaving happier.", author: "Mother Teresa" },
+            { quote: "When you reach the end of your rope, tie a knot in it and hang on.", author: "Franklin D. Roosevelt" },
+            { quote: "Always remember that you are absolutely unique. Just like everyone else.", author: "Margaret Mead" },
+            { quote: "Don't judge each day by the harvest you reap but by the seeds that you plant.", author: "Robert Louis Stevenson" }
+        ];
+        
+        // Shuffle to get random quotes
+        const shuffledQuotes = shuffleArray(fallbackQuotes);
+        
+        // Take only 9 quotes
+        const selectedQuotes = shuffledQuotes.slice(0, 9);
+        
+        let html_block = '<div class="container-flex theme-js">';
+
+        selectedQuotes.forEach(quoteObj => {
+            html_block += `
+                <div class="col-3 quote-card">
+                    <p>"${quoteObj.quote}"</p>
+                    <h3>- ${quoteObj.author}</h3>
+                </div>
+            `;
+        });
+
+        html_block += '</div>';
+        document.getElementById("quotes-box").innerHTML = html_block;
+        console.log("Quotes displayed successfully");
+    } catch (error) {
+        console.error('Error handling quotes:', error);
+        document.getElementById("quotes-box").innerHTML = "<p>Error loading quotes. Please try again.</p>";
+    }
+}
+
+// Function to shuffle an array (Fisher-Yates algorithm)
+function shuffleArray(array) {
+    const newArray = [...array]; // Create a copy to avoid modifying the original
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // Swap elements
+    }
+    return newArray;
+}
 </script>
 
 
